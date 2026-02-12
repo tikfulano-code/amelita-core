@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Amelita</title>
+</head>
+<body>
+
+  <h1>Amelita Online</h1>
+
+  <input id="msg" placeholder="Digite sua mensagem">
+  <button onclick="enviar()">Enviar</button>
+
+  <pre id="resposta"></pre>
+
+  <script>
+    async function enviar() {
+      const message = document.getElementById("msg").value;
+
+      const response = await fetch("/api/gemini", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await response.json();
+
+      document.getElementById("resposta").innerText =
+        data.reply || JSON.stringify(data);
+    }
+  </script>
+
+</body>
+</html>
