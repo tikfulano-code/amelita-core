@@ -28,7 +28,3 @@
 
 document.getElementById("resposta").innerText =
   data.reply || JSON.stringify(data);
-    }
-  </script>
-</body>
-</html>
