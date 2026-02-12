@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: data });
     }
 
-    const text =
+    const text =AIzaSyCasWvdgdfl2L23-ThwiY0m1TCU1kcrMxA
       data.candidates?.[0]?.content?.parts?.[0]?.text ||
       "Sem resposta do modelo.";
 
