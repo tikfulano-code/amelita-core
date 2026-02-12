@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Amelita Core</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amelita Core</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #fff;
+    display: flex;
+}
+
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #111827;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    color: #38bdf8;
+}
+
+.menu-item {
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.main {
+    flex: 1;
+    padding: 40px;
+}
+
+.card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.status {
+    color: #22c55e;
+    font-weight: bold;
+}
+</style>
 </head>
+
 <body>
-    <h1>Amelita Core</h1>
-    <p>Sistema base iniciado com sucesso.</p>
+
+<div class="sidebar">
+    <h2>Amelita</h2>
+    <div class="menu-item">Dashboard</div>
+    <div class="menu-item">Integrações</div>
+    <div class="menu-item">Logs</div>
+    <div class="menu-item">Configurações</div>
+</div>
+
+<div class="main">
+    <h1>Sistema Base de Integração</h1>
+
+    <div class="card">
+        <h3>Status do Sistema</h3>
+        <p class="status">● Operacional</p>
+    </div>
+
+    <div class="card">
+        <h3>Servidor</h3>
+        <p>Online e sincronizado</p>
+    </div>
+
+    <div class="card">
+        <h3>IA Core</h3>
+        <p>Pronta para integração Gemini / GPT</p>
+    </div>
+
+</div>
+
 </body>
 </html>
