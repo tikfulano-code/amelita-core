@@ -7,44 +7,44 @@
 
 <style>
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0f172a;
-    color: #fff;
-    display: flex;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  display: flex;
 }
 
 .sidebar {
-    width: 220px;
-    height: 100vh;
-    background: #111827;
-    padding: 20px;
+  width: 220px;
+  background: #111827;
+  padding: 20px;
+  height: 100vh;
 }
 
 .sidebar h2 {
-    color: #38bdf8;
+  color: #38bdf8;
 }
 
-.menu-item {
-    margin: 20px 0;
-    cursor: pointer;
+.sidebar button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: #1f2937;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
-.main {
-    flex: 1;
-    padding: 40px;
+.content {
+  flex: 1;
+  padding: 40px;
 }
 
 .card {
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-.status {
-    color: #22c55e;
-    font-weight: bold;
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 </style>
 </head>
@@ -52,32 +52,53 @@ body {
 <body>
 
 <div class="sidebar">
-    <h2>Amelita</h2>
-    <div class="menu-item">Dashboard</div>
-    <div class="menu-item">Integrações</div>
-    <div class="menu-item">Logs</div>
-    <div class="menu-item">Configurações</div>
+  <h2>Amelita</h2>
+  <button onclick="mudarTela('dashboard')">Dashboard</button>
+  <button onclick="mudarTela('logs')">Logs</button>
+  <button onclick="mudarTela('ia')">IA Core</button>
 </div>
 
-<div class="main">
-    <h1>Sistema Base de Integração</h1>
+<div class="content" id="tela">
+</div>
 
-    <div class="card">
-        <h3>Status do Sistema</h3>
-        <p class="status">● Operacional</p>
-    </div>
+<script>
+function mudarTela(tipo) {
 
-    <div class="card">
-        <h3>Servidor</h3>
+  if(tipo === "dashboard"){
+    document.getElementById("tela").innerHTML = `
+      <div class="card">
+        <h1>Status do Sistema</h1>
+        <p style="color:lime;">● Operacional</p>
+      </div>
+      <div class="card">
+        <h1>Servidor</h1>
         <p>Online e sincronizado</p>
-    </div>
+      </div>
+    `;
+  }
 
-    <div class="card">
-        <h3>IA Core</h3>
+  if(tipo === "logs"){
+    document.getElementById("tela").innerHTML = `
+      <div class="card">
+        <h1>Logs</h1>
+        <p>Inicialização concluída...</p>
+        <p>Conexão ativa...</p>
+      </div>
+    `;
+  }
+
+  if(tipo === "ia"){
+    document.getElementById("tela").innerHTML = `
+      <div class="card">
+        <h1>IA Core</h1>
         <p>Pronta para integração Gemini / GPT</p>
-    </div>
+      </div>
+    `;
+  }
+}
 
-</div>
+mudarTela("dashboard");
+</script>
 
 </body>
 </html>
