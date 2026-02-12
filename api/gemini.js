@@ -7,7 +7,7 @@
 <body>
   <h1>Amelita Online</h1>
 
-  <input id="msg" placeholder="Digite sua mensagem">
+  <input id="msg" placeholder="Digite sua mensagem" />
   <button onclick="enviar()">Enviar</button>
 
   <pre id="resposta"></pre>
@@ -26,5 +26,9 @@
 
       const data = await response.json();
 
-document.getElementById("resposta").innerText =
-  data.reply || JSON.stringify(data);
+      document.getElementById("resposta").innerText =
+        data.reply || JSON.stringify(data);
+    }
+  </script>
+</body>
+</html>
