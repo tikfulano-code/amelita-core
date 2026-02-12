@@ -1,41 +1,33 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Amelita</title>
+</head>
+<body>
+  <h1>Amelita Online</h1>
 
-  const { message } = req.body;
+  <input id="msg" placeholder="Digite sua mensagem">
+  <button onclick="enviar()">Enviar</button>
 
-  if (!message) {
-    return res.status(400).json({ error: "No message provided" });
-  }
+  <pre id="resposta"></pre>
 
-  try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
+  <script>
+    async function enviar() {
+      const message = document.getElementById("msg").value;
+
+      const response = await fetch("/api/gemini", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [{ text: message }]
-            }
-          ]
-        })
-      }
-    );
+        body: JSON.stringify({ message })
+      });
 
-    const data = await response.json();
-
-    const reply =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Sem resposta";
-
-    res.status(200).json({ reply });
-
-  } catch (error) {
-    res.status(500).json({ error: "Erro interno", details: error.message });
-  }
-}
+      const data = await response.json();
+      document.getElementById("resposta").textContent =
+        data.reply || JSON.stringify(data);
+    }
+  </script>
+</body>
+</html>
