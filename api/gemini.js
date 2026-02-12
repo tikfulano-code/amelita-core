@@ -25,8 +25,9 @@
       });
 
       const data = await response.json();
-      document.getElementById("resposta").textContent =
-        data.reply || JSON.stringify(data);
+
+document.getElementById("resposta").innerText =
+  data.reply || JSON.stringify(data);
     }
   </script>
 </body>
