@@ -3,110 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amelita Core</title>
+<title>Amelita IA</title>
 
 <style>
-body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#0f172a;
-    color:#fff;
-    display:flex;
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-.sidebar{
-    width:220px;
-    height:100vh;
-    background:#111827;
-    padding:20px;
+#chat {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
 }
 
-.sidebar h2{
-    color:#38bdf8;
+input {
+    padding: 15px;
+    border: none;
+    width: 100%;
+    font-size: 16px;
 }
 
-.sidebar button{
-    width:100%;
-    padding:10px;
-    margin:10px 0;
-    background:#1f2937;
-    border:none;
-    color:#fff;
-    cursor:pointer;
-}
-
-.sidebar button:hover{
-    background:#38bdf8;
-}
-
-.content{
-    flex:1;
-    padding:40px;
-}
-
-.card{
-    background:#1e293b;
-    padding:20px;
-    margin-bottom:20px;
-    border-radius:10px;
-}
-.status{
-    color:#22c55e;
-    font-weight:bold;
+button {
+    padding: 15px;
+    border: none;
+    background: #38bdf8;
+    color: black;
+    font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<div class="sidebar">
-    <h2>Amelita</h2>
-    <button onclick="mostrar('dashboard')">Dashboard</button>
-    <button onclick="mostrar('logs')">Logs</button>
-    <button onclick="mostrar('ia')">IA Core</button>
-</div>
+<div id="chat"></div>
 
-<div class="content" id="conteudo">
-
-    <div class="card">
-        <h1>Sistema Base de Integração</h1>
-    </div>
-
-    <div class="card">
-        <h2>Status do Sistema</h2>
-        <p class="status">● Operacional</p>
-    </div>
-
-    <div class="card">
-        <h2>Servidor</h2>
-        <p>Online e sincronizado</p>
-    </div>
-
+<div style="display:flex;">
+<input id="userInput" placeholder="Digite sua mensagem..." />
+<button onclick="sendMessage()">Enviar</button>
 </div>
 
 <script>
-function mostrar(secao){
-    let area = document.getElementById("conteudo");
+async function sendMessage() {
+    const input = document.getElementById("userInput");
+    const chat = document.getElementById("chat");
 
-    if(secao === "logs"){
-        area.innerHTML = `
-        <div class="card">
-        <h2>Logs do Sistema</h2>
-        <p>Nenhum erro detectado.</p>
-        </div>`;
-    }
+    const userMessage = input.value;
+    chat.innerHTML += "<p><b>Você:</b> " + userMessage + "</p>";
 
-    if(secao === "ia"){
-        area.innerHTML = `
-        <div class="card">
-        <h2>IA Core</h2>
-        <p>Pronta para integração Gemini / GPT</p>
-        </div>`;
-    }
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer SUA_CHAVE_AQUI"
+        },
+        body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "user", content: userMessage }
+            ]
+        })
+    });
 
-    if(secao === "dashboard"){
-        location.reload();
-    }
+    const data = await response.json();
+    const aiMessage = data.choices[0].message.content;
+
+    chat.innerHTML += "<p><b>Amelita:</b> " + aiMessage + "</p>";
+
+    input.value = "";
 }
 </script>
 
