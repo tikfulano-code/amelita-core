@@ -1,34 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Amelita</title>
-</head>
-<body>
-  <h1>Amelita Online</h1>
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-  <input id="msg" placeholder="Digite sua mensagem" />
-  <button onclick="enviar()">Enviar</button>
+// Configuração do motor de IA
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-  <pre id="resposta"></pre>
+export async function gerarRespostaIA(prompt) {
+  try {
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-1.5-flash",
+      systemInstruction: "Você é o motor de inteligência do sistema Amelita. Responda de forma técnica e objetiva."
+    });
 
-  <script>
-    async function enviar() {
-      const message = document.getElementById("msg").value;
-
-      const response = await fetch("/api/gemini", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message })
-      });
-
-      const data = await response.json();
-
-      document.getElementById("resposta").innerText =
-        data.reply || JSON.stringify(data);
-    }
-  </script>
-</body>
-</html>
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text();
+  } catch (error) {
+    console.error("Erro no Cérebro IA:", error);
+    throw new Error("Falha na inteligência central.");
+  }
+}
